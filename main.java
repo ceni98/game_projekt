@@ -220,7 +220,7 @@ public class main {
 
 	public static void combat(ArrayList<bossok> bossok) {
 
-		for (long plXP = 0; plXP <= 4; plXP++) {
+		for (int plXP = 0; plXP < 4; plXP++) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//////////////////////////////////////////////// ELSÕ
@@ -281,183 +281,198 @@ public class main {
 								combat(bossok);
 								break;
 						}
+								//boss támad, ha nem érvénytelen parancsot adunk meg
+							if ((command1 >= 1) || (command1 <= 3)) {
+								plHP -= basilisk.dmg / 3;
+							}
+
+
+
 					}
 				}
-			} catch (Exception no) {
-						System.out.println("Eltörted a játékot, kezdheted újra! (Nem megfelelõ parancs.)");
-						combat(bossok);
-			}
 
-			//boss támad
-					plHP -= basilisk.dmg / 3;
+				} catch(Exception no){
+					System.out.println("Eltörted a játékot, kezdheted újra! (Nem megfelelõ parancs.)");
+					combat(bossok);
+				}
 
 
-					if (plHP < 0) {
-						System.out.println("Meghaltál, kezdd újra!");
-					} else if (basilisk.hp <= 0) {
-						System.out.println("Gyõztél!");
-						plHP *= 1.5;
-						plDMG *= 1.5;
-						plSK *= 1.5;
-						System.out.println("Jelenlegi Statok:" + "\n" + plHP + " Hp " + plDMG + " dmg " + plSK
-								+ " dmg " + plXP + " xp");
-					}
-
-
-
+				if (plHP < 0) {
+					System.out.println("Meghaltál, kezdd újra!");
+				} else if (basilisk.hp <= 0) {
+					System.out.println("Gyõztél!");
+					plHP *= 1.5;
+					plDMG *= 1.5;
+					plSK *= 1.5;
+					System.out.println("Jelenlegi Statok:" + "\n" + plHP + " Hp " + plDMG + " dmg " + plSK
+							+ " dmg " + plXP + " xp");
+				}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			//////////////////////////////////////////////// MÁSODIK
-			//////////////////////////////////////////////// BOSS///////////////////////////////////////////////////////////////
+				//////////////////////////////////////////////// MÁSODIK
+				//////////////////////////////////////////////// BOSS///////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			try {
-				if (plXP == 2) {
-					bossok.get(1);
-					while (plHP >= 0 && frost_giant.hp >= 0) {
-						System.out.println("Jégóriás életereje: " + frost_giant.hp + "\nÉleterõd: " + plHP);
-						System.out.println("Gombok:\n1 - Támadás\n2 - Különleges támadás\n3 - Gyógyítás");
+				try {
+					if (plXP == 2) {
+						bossok.get(1);
+						while (plHP >= 0 && frost_giant.hp >= 0) {
+							System.out.println("Jégóriás életereje: " + frost_giant.hp + "\nÉleterõd: " + plHP);
+							System.out.println("Gombok:\n1 - Támadás\n2 - Különleges támadás\n3 - Gyógyítás");
 
-						Scanner comm2 = new Scanner(System.in);
-						int command2 = comm2.nextInt();
+							Scanner comm2 = new Scanner(System.in);
+							int command2 = comm2.nextInt();
 
-						switch (command2) {
-							case 1: // játékos támad
-								frost_giant.serul(((int) ((Math.random() * (plDMG - (plDMG - 20) + 1) + (plDMG - 20)))));
-								// random dmg, hogy ne csak fixszámot vonjon le,
-								// ugyanígy lesz megcsinálva a bossoknál is
-								break;
+							switch (command2) {
+								case 1: // játékos támad
+									frost_giant.serul(((int) ((Math.random() * (plDMG - (plDMG - 20) + 1) + (plDMG - 20)))));
+									// random dmg, hogy ne csak fixszámot vonjon le,
+									// ugyanígy lesz megcsinálva a bossoknál is
+									break;
 
-							case 2:  // játékos skill támadása, ezt valahogy megcsinálom, hogy csak
-								// 2-3
-								// körönként lehessen, amolyan cooldown-nal
-								frost_giant.serul(((int) ((Math.random() * (plSK - (plSK - 20) + 1) + (plSK - 20)))));
-								break;
+								case 2:  // játékos skill támadása, ezt valahogy megcsinálom, hogy csak
+									// 2-3
+									// körönként lehessen, amolyan cooldown-nal
+									frost_giant.serul(((int) ((Math.random() * (plSK - (plSK - 20) + 1) + (plSK - 20)))));
+									break;
 
-							case 3:// heal, amibõl lesz 5 egy csata alatt, 40 hp-t fog visszatölteni
-								long h_count = 5;
-								plHP += 50;
-								System.out.println("Gyógylötty betolva: " + plHP + " Hp");
-								h_count--;
-								System.out.println("Még " + h_count + " löttyöd maradt!");
-								break;
+								case 3:// heal, amibõl lesz 5 egy csata alatt, 40 hp-t fog visszatölteni
+									long h_count = 5;
+									plHP += 50;
+									System.out.println("Gyógylötty betolva: " + plHP + " Hp");
+									h_count--;
+									System.out.println("Még " + h_count + " löttyöd maradt!");
+									break;
 
-							default:
-								System.out.println("Nem megfelelõ szám! Kérlek adj meg egy számot 1 és 3 közt!");
-								combat(bossok);
-								break;
+								default:
+									System.out.println("Nem megfelelõ szám! Kérlek adj meg egy számot 1 és 3 közt!");
+									combat(bossok);
+									break;
+							}
+								//boss támad
+								if ((command2 == 1) || (command2 == 2) || (command2 == 3)) {
+									plHP -= frost_giant.dmg / 3;
+
+
+							}
+
+						}
+						if (plHP < 0) {
+							System.out.println("Meghaltál, kezdd újra!");
 						}
 
-					}
-				}
-			} catch (Exception no) {
-				System.out.println("Eltörted a játékot, kezdheted újra! (Nem megfelelõ parancs.)");
-				combat(bossok);
-			}
-			//boss támad
-			plHP -= frost_giant.dmg / 3;
-
-			if (plHP < 0) {
-				System.out.println("Meghaltál, kezdd újra!");
-			}
-
-			if (basilisk.hp <= 0) {
-				System.out.println("Gyõztél!");
-				plHP *= 1.5;
-				plDMG *= 1.5;
-				plSK *= 1.5;
-				System.out.println("Jelenlegi Statok:" + "\n" + plHP + " Hp " + plDMG + " dmg " + plSK + " dmg "
-						+ plXP + " xp");
-			}
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			//////////////////////////////////////////////// HARMADIK
-			//////////////////////////////////////////////// BOSS///////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			try {
-				if (plXP == 3) {
-					bossok.get(2);
-					while (plHP >= 0 && shadow_lord.hp >= 0) {
-						System.out.println("Sötét Nagyúr életereje: " + shadow_lord.hp + "\nÉleterõd: " + plHP);
-						System.out.println("Gombok:\n1 - Támadás\n2 - Különleges támadás\n3 - Gyógyítás");
-
-						Scanner comm3 = new Scanner(System.in);
-						int command3 = comm3.nextInt();
-
-						switch (command3) {
-							case 1: // játékos támad
-								shadow_lord.serul(((int) ((Math.random() * (plDMG - (plDMG - 20) + 1) + (plDMG - 20)))));
-								break;
-
-							case 2: // játékos skill támadása, ezt valahogy megcsinálom, hogy csak
-								// 2-3
-								// körönként lehessen, amolyan cooldown-nal
-								shadow_lord.serul(((int) ((Math.random() * (plSK - (plSK - 20) + 1) + (plSK - 20)))));
-								break;
-
-							case 3: // heal, amibõl lesz 5 egy csata alatt, 40 hp-t fog visszatölteni
-								int h_count = 5;
-								plHP += 50;
-								System.out.println("Gyógylötty betolva: " + plHP + " Hp");
-								h_count--;
-								System.out.println("Még " + h_count + " löttyöd maradt!");
-								break;
-
-							default:
-								System.out.println("Nem megfelelõ szám! Kérlek adj meg egy számot 1 és 3 közt!");
-								combat(bossok);
+						if (frost_giant.hp <= 0) {
+							System.out.println("Gyõztél!");
+							plHP *= 1.5;
+							plDMG *= 1.5;
+							plSK *= 1.5;
+							System.out.println("Jelenlegi Statok:" + "\n" + plHP + " Hp " + plDMG + " dmg " + plSK + " dmg "
+									+ plXP + " xp");
 						}
-						//boss támad
-						plHP -= shadow_lord.dmg / 3;
 					}
+				} catch (Exception no) {
+					System.out.println("Eltörted a játékot, kezdheted újra! (Nem megfelelõ parancs.)");
+					combat(bossok);
 				}
 
-			} catch (Exception no) {
-				System.out.println("Eltörted a játékot, kezdheted újra! (Nem megfelelõ parancs.)");
-				combat(bossok);
-			}
-			if (plHP < 0) {
-				System.out.println("Meghaltál, kezdd újra!");
-			}
 
-			if (shadow_lord.hp <= 0) {
-				//plot lezárása
-			//	plotEND();
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				//////////////////////////////////////////////// HARMADIK
+				//////////////////////////////////////////////// BOSS///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				try {
+					if (plXP == 3) {
+						bossok.get(2);
+						while (plHP >= 0 && shadow_lord.hp >= 0) {
+							System.out.println("Sötét Nagyúr életereje: " + shadow_lord.hp + "\nÉleterõd: " + plHP);
+							System.out.println("Gombok:\n1 - Támadás\n2 - Különleges támadás\n3 - Gyógyítás");
+
+							Scanner comm3 = new Scanner(System.in);
+							int command3 = comm3.nextInt();
+
+							switch (command3) {
+								case 1: // játékos támad
+									shadow_lord.serul(((int) ((Math.random() * (plDMG - (plDMG - 20) + 1) + (plDMG - 20)))));
+									break;
+
+								case 2: // játékos skill támadása, ezt valahogy megcsinálom, hogy csak
+									// 2-3
+									// körönként lehessen, amolyan cooldown-nal
+									shadow_lord.serul(((int) ((Math.random() * (plSK - (plSK - 20) + 1) + (plSK - 20)))));
+									break;
+
+								case 3: // heal, amibõl lesz 5 egy csata alatt, 40 hp-t fog visszatölteni
+									int h_count = 5;
+									plHP += 50;
+									System.out.println("Gyógylötty betolva: " + plHP + " Hp");
+									h_count--;
+									System.out.println("Még " + h_count + " löttyöd maradt!");
+									break;
+
+								default:
+									System.out.println("Nem megfelelõ szám! Kérlek adj meg egy számot 1 és 3 közt!");
+									combat(bossok);
+							}
+									if (command3 == 1 || command3 == 2 || command3 == 3) {
+										//boss támad
+										plHP -= shadow_lord.dmg / 3;
+									}
+
+
+
+						}
+					}
+
+				} catch (Exception no) {
+					System.out.println("Eltörted a játékot, kezdheted újra! (Nem megfelelõ parancs.)");
+					combat(bossok);
+				}
+				if (plHP < 0) {
+					System.out.println("Meghaltál, kezdd újra!");
+				}
+
+				if (shadow_lord.hp <= 0) {
+					//plot lezárása
+					//	plotEND();
+				}
+
+
+
+
+
+				/*
+				 * private static void plotHuman() throws FileNotFoundException { File plot2 =
+				 * new File("plotHum.txt"); Scanner story2 = new Scanner(plot2); while
+				 * (story2.hasNextLine()) { String data1 = story2.nextLine();
+				 * System.out.println(data1); } story2.close(); }
+				 *
+				 *
+				 * private static void plotOrc() throws FileNotFoundException { File plot3 = new
+				 * File("plotOrc.txt"); Scanner story2 = new Scanner(plot3); while
+				 * (story2.hasNextLine()) { String data0 = story2.nextLine();
+				 * System.out.println(data0); } story2.close(); }
+				 *
+				 *
+				 * private static void plot3() throws FileNotFoundException {
+				 * File plot4 = new File("plot3.txt");
+				 * Scanner story3 = new Scanner(plot4);
+				 * while (story3.hasNextLine()) {
+				 * String data2 = story3.nextLine();
+				 * System.out.println(data2); }
+				 * story3.close();
+				 * }
+				 *
+				 *
+				 * private static void plotEND() throws FileNotFoundException { File plotEND =
+				 * new File("plot4.txt"); Scanner storyEND = new Scanner(plotEND); while
+				 * (storyEND.hasNextLine()) { String dataEND = storyEND.nextLine();
+				 * System.out.println(dataEND); } storyEND.close(); }
+				 */
+
+
 			}
 		}
 	}
-
-
-
-	/*
-	 * private static void plotHuman() throws FileNotFoundException { File plot2 =
-	 * new File("plotHum.txt"); Scanner story2 = new Scanner(plot2); while
-	 * (story2.hasNextLine()) { String data1 = story2.nextLine();
-	 * System.out.println(data1); } story2.close(); }
-	 *
-	 *
-	 * private static void plotOrc() throws FileNotFoundException { File plot3 = new
-	 * File("plotOrc.txt"); Scanner story2 = new Scanner(plot3); while
-	 * (story2.hasNextLine()) { String data0 = story2.nextLine();
-	 * System.out.println(data0); } story2.close(); }
-	 *
-	 *
-	 * private static void plot3() throws FileNotFoundException {
-	 * File plot4 = new File("plot3.txt");
-	 * Scanner story3 = new Scanner(plot4);
-	 * while (story3.hasNextLine()) {
-	 * String data2 = story3.nextLine();
-	 * System.out.println(data2); }
-	 * story3.close();
-	 * }
-	 *
-	 *
-	 * private static void plotEND() throws FileNotFoundException { File plotEND =
-	 * new File("plot4.txt"); Scanner storyEND = new Scanner(plotEND); while
-	 * (storyEND.hasNextLine()) { String dataEND = storyEND.nextLine();
-	 * System.out.println(dataEND); } storyEND.close(); }
-	 */
-}
-
